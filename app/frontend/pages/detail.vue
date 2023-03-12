@@ -18,9 +18,59 @@
       </div>
     </div>
   </div>
+
+  <h2> Reviews </h2>
+  <div
+      v-for="review in loadedReviews"
+      :key="review.id"
+      class="review-item-wrapper"
+      >
+
+      <div class="name-and-rating">
+        <div class="display-name">{{ review.display_name }}</div>
+        <div class="rating">{{ review.rating }} / 5</div>
+      </div>
+      <div class="comment">{{ review.comment }}</div>
+      <div class="created-at">{{ review.created_at }}</div>
+  </div>
 </template>
 
 <style scoped>
+
+h2 {
+  padding: 16px;
+}
+.review-item-wrapper {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px black;
+}
+
+.name-and-rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+.created-at {
+  align-self: end;
+}
+
+.display-name {
+  font-size: 20px;
+}
+
+.rating {
+  margin-left: 20px;
+}
 
 .place-item-wrapper {
     border-color: #c6c6c6;
@@ -63,6 +113,7 @@
   import { ref } from 'vue'
   import { useRoute } from 'vue-router';
   const loadedPlace = ref(null);
+  const loadedReviews = ref([]);
   const route = useRoute();
   const placeId = route.params.placeId;
 
@@ -72,9 +123,17 @@
       .then((response) => response.json())
       .then((data) => {
         loadedPlace.value = data.place;
-        console.log(data.place);
       });
   }
 
+  function loadReviews(placeId) {
+    fetch(`/api/places/${placeId}/reviews`)
+      .then((response) => response.json())
+      .then((data) => {
+        loadedReviews.value = data.reviews
+      })
+  }
+
   fetchPlace(placeId);
+  loadReviews(placeId);
 </script>
