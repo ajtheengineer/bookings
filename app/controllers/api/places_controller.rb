@@ -18,5 +18,22 @@ module Api
         places: places_json
       }
     end
+
+    def show
+      place_id = params[:place_id]
+
+      place = Place.find(place_id)
+      render json: {
+        place: {
+          id: place.id,
+          name: place.name,
+          city: place.city,
+          description: place.description,
+          image_src: place.image_src,
+          created_at: place.created_at,
+          updated_at: place.updated_at
+        }
+      }
+    end
   end
 end

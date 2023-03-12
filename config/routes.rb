@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   root "bookings#index"
 
   get "api/places", to: "api/places#index"
+  get "api/places/:place_id", to: "api/places#show"
   get "*path", to: "bookings#index"
 end
