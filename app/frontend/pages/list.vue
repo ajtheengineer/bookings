@@ -1,3 +1,3 @@
 <template>
-  List of hotels
+  List of places
 </template>

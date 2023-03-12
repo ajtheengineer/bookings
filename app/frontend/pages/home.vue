@@ -1,7 +1,7 @@
 <template>
-  <title>Bookings</title>
+  <title>Book A Place</title>
   <div>
-    <div class="website-header">RealBookings</div>
+    <div class="website-header">Book-A-Place</div>
   </div>
   <div>
     <router-view />

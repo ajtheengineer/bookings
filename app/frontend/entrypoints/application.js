@@ -10,8 +10,8 @@ import Detail from '@/pages/detail.vue'
 // We'll talk about nested routes later.
 const routes = [
   { path: '/', component: List },
-  { path: '/bookings', component: List },
-  { path: '/bookings/1', component: Detail },
+  { path: '/places', component: List },
+  { path: '/places/1', component: Detail },
 
   // Catch all path
   // { path: '/:pathMatch(.*)*', redirect: '/'}
