@@ -11,7 +11,7 @@ import Detail from '@/pages/detail.vue'
 const routes = [
   { path: '/', component: List },
   { path: '/places', component: List },
-  { path: '/places/1', component: Detail },
+  { path: '/places/:placeId', component: Detail },
 
   // Catch all path
   // { path: '/:pathMatch(.*)*', redirect: '/'}

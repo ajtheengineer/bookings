@@ -5,6 +5,7 @@
       v-for="place in placesFromServer"
       :key="place.id"
       class="place-item-wrapper"
+      @click="clickPlace(place.id)"
       >
       <div class="image-wrapper">
         <img class="image" :src="place.image_src">
@@ -33,6 +34,8 @@
     margin: 16px;
     display: flex;
     flex-direction: row;
+
+    cursor: pointer;
   }
 
   .content-wrapper {
@@ -61,10 +64,12 @@
 
 <script setup>
   import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
 
   // When the page loads, I haven't hit the server yet for the places.
   // So there are no places to show right now.
   const placesFromServer = ref([]);
+  const router = useRouter();
   
   // On page load, I want to ask the server to give me a list of places in json format.
   // Once i get the data in json format, I want to iterate through the list of places
@@ -76,6 +81,12 @@
         placesFromServer.value = data.places;
         console.log(data.places);
       });
+  }
+
+  function clickPlace(placeId) {
+    console.log("clickplaces was called!");
+    console.log(placeId);
+    router.push(`/places/${placeId}`)
   }
 
   fetchPlaces()

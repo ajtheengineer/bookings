@@ -1,3 +1,3 @@
 <template>
-  Hotel 1 Detail Page
+  Hotel {{ $route.params.placeId }} Detail Page
 </template>
