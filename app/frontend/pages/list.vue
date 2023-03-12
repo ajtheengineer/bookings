@@ -1,9 +1,63 @@
 <template>
   List of places
   <div>
-    {{ placesFromServer }}
+    <div
+      v-for="place in placesFromServer"
+      :key="place.id"
+      class="place-item-wrapper"
+      >
+      <div class="image-wrapper">
+        <img class="image" :src="place.image_src">
+      </div>
+      <div class="content-wrapper">
+        <div class="name">
+          {{ place.name }}
+        </div>
+        <div class="city">
+          {{ place.city }}
+        </div>
+        <div class="description">
+          {{ place.description }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+  .place-item-wrapper {
+    border-color: #c6c6c6;
+    border-radius: 2px;
+    padding: 16px;
+    border-style: solid;
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+  }
+  .image-wrapper {
+    padding: 8px;
+  }
+
+  .image {
+    width: 140px;
+  }
+  .name {
+    color: rgb(0, 113, 194);
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .description {
+    font-family: Roboto;
+    font-size: 14px;
+  }
+</style>
 
 <script setup>
   import { ref } from 'vue'
@@ -19,13 +73,10 @@
     fetch("/api/places")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        placesFromServer.value = data;
+        placesFromServer.value = data.places;
+        console.log(data.places);
       });
   }
 
-  // Wait 3 seconds before fetching places from the backend
-  setTimeout(function() {
-    fetchPlaces()
-  }, 3000)
+  fetchPlaces()
 </script>
