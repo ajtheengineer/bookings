@@ -1,3 +1,15 @@
+import { createApp } from 'vue/dist/vue.esm-bundler'
+
+const app = createApp({
+  data() {
+    return {
+      hotels: ["hotel_1", "hotel_2"]
+    }
+  }
+})
+
+app.mount('#app')
+
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
 //
