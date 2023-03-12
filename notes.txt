@@ -1,0 +1,29 @@
+# User stories for leaving reviews
+
+1. User can see all the ratings under the places detail page
+2. User can leave rating where they enter: 
+  - Name
+  - Rating (0 and 5)
+  - Leave a comment
+3. User can see the average rating at the top of the detail screen
+4. User can see the average rating within the list view
+
+Backend Responsibilities
+- Storing all the reviews that users have left
+- Surfacing such data to the front end
+
+Frontend
+- All the user interactions
+
+# Detail page.
+Front end is going to get all the reviews for a place by
+making a request to the following endpoint.
+```
+GET /api/places/<id>/reviews
+```
+
+When backend returns the data to the front end, 
+the front end will show tall the reviews in a list.
+
+Step 1: Defining the table in which we would store the reviews.
+

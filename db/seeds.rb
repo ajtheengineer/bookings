@@ -7,6 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Place.create!(
+  id: 1,
   name: "Buena Vista Suites Orlando",
   city: "Orlando",
   description: "This hotel is an all-suite property 3 minutes' drive from the
@@ -17,8 +18,30 @@ bp?k=0f75a7bc17dda892f039f08bd55aa1e29ec653ee7c0f2c25728eb925b197b7b5&o=&s=1"
 )
 
 Place.create!(
+  id: 2,
   name: "Royalton New York",
   city: "New York City",
   description: "This New York City hotel is located on 44th Street and is 1056 feet from Times Square. It features on-site dining and guest rooms with flat-screen TVs.",
   image_src: "https://cf.bstatic.com/xdata/images/hotel/square200/205408681.webp?k=5fadc4c7eb6396268845835a3e8cefb1f0b0b10bc3b17d679479cad049e5864a&o=&s=1"
+)
+
+Review.create!(
+  comment: "Great!",
+  display_name: "AJ",
+  rating: 5,
+  place_id: 1,
+)
+
+Review.create!(
+  comment: "OK!",
+  display_name: "Jake",
+  rating: 3,
+  place_id: 1,
+)
+
+Review.create!(
+  comment: "BAD!",
+  display_name: "AJ",
+  rating: 1,
+  place_id: 2,
 )
