@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "bookings#index"
+
+  get "api/places", to: "api/places#index"
   get "*path", to: "bookings#index"
 end
