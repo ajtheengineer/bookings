@@ -1,5 +1,7 @@
 module Api
   class PlacesController < ApplicationController
+    skip_before_action :verify_authenticity_token
+
     def index
       # This is return a list of places and all the fields for each place.
       places_json = Place.all.map do |place|

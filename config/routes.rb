@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   get "api/places", to: "api/places#index"
   get "api/places/:place_id", to: "api/places#show"
   get "api/places/:place_id/reviews", to: "api/reviews#index"
+  post "api/places/:place_id/reviews", to: "api/reviews#create"
   get "*path", to: "bookings#index"
 end

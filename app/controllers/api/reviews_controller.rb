@@ -1,5 +1,7 @@
 module Api
   class ReviewsController < ApplicationController
+    skip_before_action :verify_authenticity_token
+
     def index
       place = Place.find(params[:place_id])
 
@@ -17,6 +19,18 @@ module Api
       render json: {
         reviews: reviews_json
       }
+    end
+
+    def create
+      place = Place.find(params[:place_id])
+      Review.create!(
+        place_id: place.id,
+        comment: params[:comment],
+        rating: params[:rating].to_i,
+        display_name: params[:display_name]
+      )
+
+      render json: {}, status: :created
     end
   end
 end

@@ -20,6 +20,31 @@
   </div>
 
   <h2> Reviews </h2>
+  <div class="create-review-wrapper">
+    <label for="displayName" class="display-name-label">Display name</label>
+    <input type="text" id="displayName" v-model="displayName">
+    <label class="comment-label" for="comment">Comment</label>
+    <textarea
+      type="text"
+      id="comment"
+      v-model="comment"
+      cols="40"
+      rows="5">
+    </textarea>
+    <label for="rating" class="rating-label">Rating</label>
+    <select name="rating" id="rating" v-model="rating">
+      <option value=1>1</option>
+      <option value=2>2</option>
+      <option value=3>3</option>
+      <option value=4>4</option>
+      <option value=5>5</option>
+    </select>
+    <button
+      @click="submitReview()"
+      > 
+      Submit review
+    </button>
+  </div>
   <div
       v-for="review in loadedReviews"
       :key="review.id"
@@ -36,6 +61,43 @@
 </template>
 
 <style scoped>
+
+.create-review-wrapper {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  margin-bottom: 12px;
+}
+
+#rating {
+  width: 100px;
+  margin-top: 10px;
+}
+
+.rating-label {
+  margin-top: 20px;
+}
+
+.comment-label {
+  margin-top: 20px;
+}
+
+.display-name-label {
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+}
+
+#displayName {
+  width: 100px;
+}
+
+
 
 h2 {
   padding: 16px;
@@ -114,6 +176,9 @@ h2 {
   import { useRoute } from 'vue-router';
   const loadedPlace = ref(null);
   const loadedReviews = ref([]);
+  const displayName = ref(null);
+  const comment = ref(null);
+  const rating = ref(null);
   const route = useRoute();
   const placeId = route.params.placeId;
 
@@ -132,6 +197,30 @@ h2 {
       .then((data) => {
         loadedReviews.value = data.reviews
       })
+  }
+
+  function submitReview() {
+    // It's going to read what's been entered for display name, comment, and rating
+    // and POST that to the server in the form of a POST request.
+    fetch(`/api/places/${placeId}/reviews`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        {
+          comment: comment.value,
+          display_name: displayName.value,
+          rating: rating.value
+        }
+      )
+    }).then((_) => {
+      // Refresh the page.
+      comment.value = null
+      displayName.value = null
+      rating.value = null
+      loadReviews(placeId);
+    });
   }
 
   fetchPlace(placeId);
