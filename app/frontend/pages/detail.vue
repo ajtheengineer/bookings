@@ -20,6 +20,7 @@
   </div>
 
   <h2> Reviews </h2>
+  <h3 v-if="averageReview"> Average Rating: {{averageReview.toFixed(2)}}</h3>
   <div class="create-review-wrapper">
     <label for="displayName" class="display-name-label">Display name</label>
     <input type="text" id="displayName" v-model="displayName">
@@ -176,6 +177,7 @@ h2 {
   import { useRoute } from 'vue-router';
   const loadedPlace = ref(null);
   const loadedReviews = ref([]);
+  const averageReview = ref(null);
   const displayName = ref(null);
   const comment = ref(null);
   const rating = ref(null);
@@ -196,6 +198,12 @@ h2 {
       .then((response) => response.json())
       .then((data) => {
         loadedReviews.value = data.reviews
+        const numberOfReviews = data.reviews.length
+        var total = 0
+        data.reviews.forEach((review) => {
+          total = total + review.rating
+        })
+        averageReview.value = 1.0 * total / numberOfReviews
       })
   }
 
