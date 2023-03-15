@@ -17,8 +17,14 @@ module Api
         }
       end
 
+      sorted_places_json = if params["sort_option"] == "rating_asc"
+        places_json.sort_by { |obj| obj[:average_rating] }
+      else
+        places_json.sort_by { |obj| obj[:average_rating] }.reverse
+      end
+
       render json: {
-        places: places_json
+        places: sorted_places_json
       }
     end
 

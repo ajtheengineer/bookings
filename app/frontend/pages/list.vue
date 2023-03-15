@@ -1,5 +1,16 @@
 <template>
-  List of places
+  <h2>List of places</h2>
+  <div class="sort-wrapper">
+    <label for="sort-options">Sort Options</label>
+    <select
+      id="sort-options"
+      v-model="sortOption"
+      @change="onSortChange($event)"
+    >
+      <option value="rating_desc">Rating (highest first)</option>
+      <option value="rating_asc">Rating (lowest first)</option>
+    </select>
+  </div>
   <div>
     <div
       v-for="place in placesFromServer"
@@ -49,13 +60,18 @@
     align-content: center;
   }
 
+  #sort-options {
+    margin-top: 12px;
+    width: 150px;
+  }
+
   .content-wrapper {
     display: flex;
     flex-direction: column;
     padding: 8px;
   }
   .image-wrapper {
-    padding: 8px;
+    padding: 8px; 
   }
 
   .image {
@@ -71,6 +87,13 @@
     font-family: Roboto;
     font-size: 14px;
   }
+
+  .sort-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
 <script setup>
@@ -81,12 +104,16 @@
   // So there are no places to show right now.
   const placesFromServer = ref([]);
   const router = useRouter();
-  
+  const sortOption = ref("rating_desc")
+
+  function onSortChange(event) {
+    fetchPlaces()
+  }
   // On page load, I want to ask the server to give me a list of places in json format.
   // Once i get the data in json format, I want to iterate through the list of places
   // and render it on the screen.
   function fetchPlaces() {
-    fetch("/api/places")
+    fetch(`/api/places?sort_option=${sortOption.value}`)
       .then((response) => response.json())
       .then((data) => {
         placesFromServer.value = data.places;
