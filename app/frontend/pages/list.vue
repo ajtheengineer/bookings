@@ -11,8 +11,13 @@
         <img class="image" :src="place.image_src">
       </div>
       <div class="content-wrapper">
-        <div class="name">
-          {{ place.name }}
+        <div class="name-and-rating">
+          <div class="name">
+            {{ place.name }}
+          </div>
+          <div class="rating">
+            {{ place.average_rating.toFixed(2) }}
+          </div>
         </div>
         <div class="city">
           {{ place.city }}
@@ -36,6 +41,12 @@
     flex-direction: row;
 
     cursor: pointer;
+  }
+  .name-and-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
   }
 
   .content-wrapper {

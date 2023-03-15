@@ -4,7 +4,7 @@ module Api
 
     def index
       # This is return a list of places and all the fields for each place.
-      places_json = Place.all.map do |place|
+      places_json = Place.all.includes(:reviews).map do |place|
         {
           id: place.id,
           name: place.name,
@@ -12,7 +12,8 @@ module Api
           description: place.description,
           image_src: place.image_src,
           created_at: place.created_at,
-          updated_at: place.updated_at
+          updated_at: place.updated_at,
+          average_rating: place.average_rating
         }
       end
 
