@@ -3,8 +3,12 @@ module Api
     skip_before_action :verify_authenticity_token
 
     def index
+      filtered_places = Place.all
+      if !params[:search_term].blank?
+        filtered_places = Place.where("name LIKE :search_term OR description LIKE :search_term", search_term: "%#{params[:search_term]}%")
+      end
       # This is return a list of places and all the fields for each place.
-      places_json = Place.all.includes(:reviews).map do |place|
+      places_json = filtered_places.includes(:reviews).map do |place|
         {
           id: place.id,
           name: place.name,

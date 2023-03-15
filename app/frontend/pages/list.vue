@@ -1,5 +1,13 @@
 <template>
   <h2>List of places</h2>
+  <div class="search-wrapper">
+    <label for="search">Search</label>
+    <input
+      type="text"
+      v-model="searchTerm"
+      @keyup="onSearchChange($event)"
+      >
+  </div>
   <div class="sort-wrapper">
     <label for="sort-options">Sort Options</label>
     <select
@@ -53,6 +61,12 @@
 
     cursor: pointer;
   }
+
+  .search-wrapper { 
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+  }
   .name-and-rating {
     display: flex;
     flex-direction: row;
@@ -105,15 +119,20 @@
   const placesFromServer = ref([]);
   const router = useRouter();
   const sortOption = ref("rating_desc")
+  const searchTerm = ref("")
 
   function onSortChange(event) {
+    fetchPlaces()
+  }
+
+  function onSearchChange(event) {
     fetchPlaces()
   }
   // On page load, I want to ask the server to give me a list of places in json format.
   // Once i get the data in json format, I want to iterate through the list of places
   // and render it on the screen.
   function fetchPlaces() {
-    fetch(`/api/places?sort_option=${sortOption.value}`)
+    fetch(`/api/places?sort_option=${sortOption.value}&search_term=${searchTerm.value}`)
       .then((response) => response.json())
       .then((data) => {
         placesFromServer.value = data.places;
