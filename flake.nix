@@ -12,7 +12,7 @@
       in {
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
-            nixpkgs-ruby.packages."${system}"."ruby-3.2.1"
+            nixpkgs-ruby.packages."${system}"."ruby-3.1.3"
             pkgs.postgresql
             pkgs.chromedriver
             pkgs.yarn
